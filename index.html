@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -28,7 +28,6 @@
       </a>
       <nav aria-label="Primary navigation">
         <a href="#work">Work</a>
-        <a href="#method">Method</a>
         <a href="#results">Results</a>
         <a href="#scope">Scope</a>
       </nav>
@@ -99,26 +98,6 @@
         </article>
       </section>
 
-      <section class="context" aria-labelledby="context-title">
-        <div class="context-title">
-          <p class="section-number">Research context</p>
-          <h2 id="context-title">Conserved non-coding regions are difficult to see—and biologically important.</h2>
-        </div>
-        <div class="context-copy">
-          <p>
-            Most of the human genome does not encode proteins, yet parts of this “dark matter”
-            carry regulatory and evolutionary signals. The project asks whether a genomic
-            language model can distinguish highly conserved from weakly conserved long
-            non-coding RNA windows on chromosome 1.
-          </p>
-          <div class="context-facts">
-            <div><span>Reference</span><b>GRCh38 · chr1</b></div>
-            <div><span>Annotations</span><b>GENCODE v38</b></div>
-            <div><span>Conservation</span><b>phastCons 100-way</b></div>
-          </div>
-        </div>
-      </section>
-
       <section class="section work" id="work">
         <div class="section-heading">
           <p class="section-number">01 / Engineering</p>
@@ -178,148 +157,9 @@
         </div>
       </section>
 
-      <section class="section method" id="method">
-        <div class="section-heading">
-          <p class="section-number">02 / Method deep dive</p>
-          <h2>A reproducible path from coordinates to candidates.</h2>
-          <p>
-            The original project README documented the operational details. This section
-            preserves the substance of that work while removing private infrastructure paths.
-          </p>
-        </div>
-
-        <div class="method-flow" aria-label="Detailed model workflow">
-          <article>
-            <span class="flow-index">01</span>
-            <div>
-              <p class="card-kicker">Build the evidence</p>
-              <h3>Align three genomic sources</h3>
-              <p>
-                Processed lncRNA annotations define the regions of interest; the GRCh38 FASTA
-                provides nucleotide sequence; and phastCons bigWig scores quantify evolutionary
-                conservation for each sampled window.
-              </p>
-            </div>
-            <ul>
-              <li>Processed GTF annotations</li>
-              <li>Chromosome 1 FASTA</li>
-              <li>100-species conservation scores</li>
-            </ul>
-          </article>
-          <article>
-            <span class="flow-index">02</span>
-            <div>
-              <p class="card-kicker">Construct the task</p>
-              <h3>Window, label, and balance</h3>
-              <p>
-                Sliding 512 bp windows are labelled from phastCons quantiles. Low- and
-                high-conservation tails form the binary task while ambiguous middle windows are
-                left out, producing a clearer and balanced learning signal.
-              </p>
-            </div>
-            <ul>
-              <li>128 bp stride</li>
-              <li>P30 / P70 labelling</li>
-              <li>1:1 class sampling</li>
-            </ul>
-          </article>
-          <article>
-            <span class="flow-index">03</span>
-            <div>
-              <p class="card-kicker">Adapt the model</p>
-              <h3>GPN backbone, custom head</h3>
-              <p>
-                The pretrained <code>songlab/gpn-brassicales</code> representation is pooled and
-                passed through LayerNorm and an MLP classifier. Reverse-complement augmentation
-                teaches strand robustness without changing the biological label.
-              </p>
-            </div>
-            <ul>
-              <li>Global sequence pooling</li>
-              <li>LayerNorm + MLP</li>
-              <li>Reverse-complement augmentation</li>
-            </ul>
-          </article>
-          <article>
-            <span class="flow-index">04</span>
-            <div>
-              <p class="card-kicker">Train deliberately</p>
-              <h3>Freeze first, then unfreeze</h3>
-              <p>
-                Training begins with the classifier head while the pretrained backbone is frozen,
-                then opens the full network with separate learning rates. AMP reduces GPU memory
-                use, and checkpoints preserve both the best and final model states.
-              </p>
-            </div>
-            <ul>
-              <li>3 frozen-head epochs</li>
-              <li>Head LR 1e−3 · base LR 2e−5</li>
-              <li>Mixed precision + checkpointing</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="repro-grid">
-          <article class="terminal-card">
-            <div class="terminal-bar"><span></span><span></span><span></span><b>baseline experiment</b></div>
-            <pre><code><span>python</span> train_gpn.py \
-  --epochs 30 \
-  --seq_len 512 \
-  --stride 128 \
-  --p_lo 30 --p_hi 70 \
-  --eval_every 200 \
-  --high_thr 0.60 --low_thr 0.40 \
-  --topk 200 \
-  --amp</code></pre>
-          </article>
-          <article class="repro-copy">
-            <p class="card-kicker">Reproducibility</p>
-            <h3>One run, structured outputs.</h3>
-            <p>
-              Every experiment writes step- and epoch-level metrics, validation probabilities,
-              candidate rankings, diagnostic figures, configuration metadata, and both best and
-              final checkpoints into a run-specific directory.
-            </p>
-            <div class="output-list">
-              <span>metrics.csv</span><span>predictions.csv</span><span>candidates.csv</span>
-              <span>figures/</span><span>ckpts/best.pt</span><span>final_metrics.json</span>
-            </div>
-          </article>
-        </div>
-
-        <div class="finetune-panel">
-          <div class="finetune-copy">
-            <p class="card-kicker">Coordinate-based fine-tuning</p>
-            <h3>From curated gene sets to a second evaluation path.</h3>
-            <p>
-              The fine-tuning pipeline accepts chromosome/start/end/label coordinate files,
-              creates fixed-length positive and negative windows, optionally samples background
-              negatives with PyRanges, and persists an auditable train/validation/test split as JSONL.
-            </p>
-          </div>
-          <div class="split-visual" aria-label="Fine-tuning dataset split">
-            <div class="split-bar"><i></i><i></i><i></i></div>
-            <div class="split-labels">
-              <span><b>80%</b> train</span><span><b>10%</b> validation</span><span><b>10%</b> test</span>
-            </div>
-            <p>128 bp windows · AdamW · optional gradient accumulation</p>
-          </div>
-        </div>
-
-        <div class="hpc-strip">
-          <div>
-            <p class="card-kicker">Katana HPC</p>
-            <h3>Three GPU jobs, one consistent interface.</h3>
-          </div>
-          <code>qsub gpn_train_hf.pbs</code>
-          <code>qsub gpn_brass_finetune_set1.pbs</code>
-          <code>qsub gpn_brass_finetune_set2.pbs</code>
-        </div>
-      </section>
-
       <section class="section results" id="results">
         <div class="section-heading section-heading--light">
-          <p class="section-number">03 / Evidence</p>
+          <p class="section-number">02 / Evidence</p>
           <h2>Results that can be inspected, not just reported.</h2>
           <p>
             Each chart answers a different question: whether the model separates classes,
@@ -357,7 +197,7 @@
 
       <section class="section scope" id="scope">
         <div class="scope-copy">
-          <p class="section-number">04 / Contribution boundary</p>
+          <p class="section-number">03 / Contribution boundary</p>
           <h2>Clear about what I built.</h2>
           <p>
             This work originated in the UNSW COMP3900 team capstone
@@ -381,24 +221,6 @@
           <div class="audit-row"><span>Fine-tuning PBS jobs</span><b>100%</b></div>
           <div class="audit-meter"><i style="width: 100%"></i></div>
           <p>Calculated from the final main-branch files associated with my university Git identity.</p>
-        </div>
-      </section>
-
-      <section class="references" aria-labelledby="references-title">
-        <div>
-          <p class="section-number">Research foundations</p>
-          <h2 id="references-title">Built on open genomic research.</h2>
-        </div>
-        <div class="reference-links">
-          <a href="https://doi.org/10.1073/pnas.2311219120" target="_blank" rel="noreferrer">
-            <span>Paper</span><b>Genomic language models</b><small>Benegas et al. · PNAS</small>
-          </a>
-          <a href="https://huggingface.co/songlab/gpn-brassicales" target="_blank" rel="noreferrer">
-            <span>Model</span><b>songlab/gpn-brassicales</b><small>Pretrained GPN backbone</small>
-          </a>
-          <a href="https://github.com/songlab-cal/gpn" target="_blank" rel="noreferrer">
-            <span>Upstream</span><b>songlab-cal/gpn</b><small>Open-source research code</small>
-          </a>
         </div>
       </section>
 
