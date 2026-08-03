@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Huan Zhang's GPN research engineering contribution: genomic sequence modelling, fine-tuning, HPC workflows, and evaluation."
+    />
+    <meta name="theme-color" content="#09120f" />
+    <title>Huan Zhang — Genomic Deep Learning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <span class="brand-mark">HZ</span>
+        <span>Research portfolio</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#results">Results</a>
+        <a href="#scope">Scope</a>
+      </nav>
+      <a class="github-link" href="https://github.com/Flandre23333" target="_blank" rel="noreferrer">
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse"></span> Genomic deep learning · 2025</p>
+          <h1>Finding signal in the genome’s <em>dark matter.</em></h1>
+          <p class="hero-intro">
+            I built an end-to-end GPN training and fine-tuning pipeline to identify conserved
+            non-coding RNA regions—turning raw genomic windows into ranked, interpretable evidence.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#results">Explore the results</a>
+            <a class="button button-secondary" href="#scope">See my contribution</a>
+          </div>
+        </div>
+
+        <div class="signal-card" aria-label="Abstract genomic sequence visualization">
+          <div class="signal-card__header">
+            <span>chr1 / validation signal</span>
+            <span class="status">MODEL READY</span>
+          </div>
+          <div class="sequence" aria-hidden="true">
+            <span>A</span><span>C</span><span>G</span><span>T</span><span>T</span><span>A</span><span>G</span><span>C</span>
+            <span>G</span><span>A</span><span>C</span><span>T</span><span>C</span><span>G</span><span>A</span><span>T</span>
+          </div>
+          <div class="signal-plot" aria-hidden="true">
+            <i style="--height: 12%"></i><i style="--height: 20%"></i><i style="--height: 16%"></i>
+            <i class="hot" style="--height: 74%"></i><i class="hot" style="--height: 91%"></i>
+            <i class="hot" style="--height: 82%"></i><i style="--height: 35%"></i><i style="--height: 18%"></i>
+            <i style="--height: 24%"></i><i class="hot" style="--height: 66%"></i>
+            <i class="hot" style="--height: 88%"></i><i style="--height: 41%"></i><i style="--height: 22%"></i>
+            <i style="--height: 28%"></i><i class="hot" style="--height: 79%"></i><i style="--height: 32%"></i>
+          </div>
+          <div class="signal-card__footer">
+            <span><b>283</b> windows</span>
+            <span><b>0.60</b> decision threshold</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Model metrics">
+        <article>
+          <p>AUROC</p>
+          <strong>0.932</strong>
+          <span>discrimination quality</span>
+        </article>
+        <article>
+          <p>AUPRC</p>
+          <strong>0.938</strong>
+          <span>precision–recall balance</span>
+        </article>
+        <article>
+          <p>Accuracy</p>
+          <strong>86.6<span>%</span></strong>
+          <span>held-out validation set</span>
+        </article>
+        <article>
+          <p>Training</p>
+          <strong>2,130</strong>
+          <span>optimisation steps</span>
+        </article>
+      </section>
+
+      <section class="section work" id="work">
+        <div class="section-heading">
+          <p class="section-number">01 / Engineering</p>
+          <h2>From genomic sequence to evidence.</h2>
+          <p>
+            The system combines reproducible data sampling, transformer fine-tuning,
+            HPC execution, and an evaluation suite designed for scientific interpretation.
+          </p>
+        </div>
+
+        <div class="work-grid">
+          <article class="work-card work-card--feature">
+            <p class="card-kicker">Core pipeline</p>
+            <h3>GPN training engine</h3>
+            <p>
+              A complete PyTorch pipeline around the pretrained GPN backbone, including
+              phastCons-quantile labelling, balanced genomic windows, reverse-complement
+              augmentation, staged freezing, checkpointing, and metric tracking.
+            </p>
+            <ul class="tag-list" aria-label="Technologies used">
+              <li>PyTorch</li><li>Hugging Face</li><li>pyBigWig</li><li>PyRanges</li>
+            </ul>
+            <div class="mini-pipeline" aria-label="Training pipeline">
+              <span>lncRNA regions</span><b>→</b><span>512 bp windows</span><b>→</b><span>GPN</span><b>→</b><span>ranked signal</span>
+            </div>
+          </article>
+
+          <article class="work-card">
+            <p class="card-kicker">Adaptation</p>
+            <h3>Fine-tuning workflow</h3>
+            <p>
+              A second training path for curated gene sets with reusable dataset construction,
+              sequence classification, gradient accumulation, and experiment-specific outputs.
+            </p>
+            <p class="ownership"><span>784 / 790</span> final lines attributed to my Git identity</p>
+          </article>
+
+          <article class="work-card">
+            <p class="card-kicker">Infrastructure</p>
+            <h3>HPC orchestration</h3>
+            <p>
+              Portable PBS jobs for GPU training on Katana, with deterministic environments,
+              cache configuration, structured logging, and separate Set 1 / Set 2 experiments.
+            </p>
+            <p class="ownership"><span>2</span> independently authored fine-tuning jobs</p>
+          </article>
+
+          <article class="work-card">
+            <p class="card-kicker">Interpretability</p>
+            <h3>Evaluation suite</h3>
+            <p>
+              Automated ROC/PR, calibration, threshold scanning, class-density, confusion,
+              candidate-length, and chromosome-wide probability views generated after training.
+            </p>
+            <p class="ownership"><span>9</span> complementary diagnostic outputs</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section results" id="results">
+        <div class="section-heading section-heading--light">
+          <p class="section-number">02 / Evidence</p>
+          <h2>Results that can be inspected, not just reported.</h2>
+          <p>
+            Each chart answers a different question: whether the model separates classes,
+            how reliable its confidence is, and where high-probability regions occur across chromosome 1.
+          </p>
+        </div>
+
+        <div class="result-grid">
+          <button class="result-card result-card--wide" data-image="assets/results/roc-pr.png" data-title="ROC and precision–recall curves">
+            <img src="assets/results/roc-pr.png" alt="ROC curve with AUROC 0.932 and precision-recall curve with AP 0.938" />
+            <span><b>Model discrimination</b><small>AUROC 0.932 · AUPRC 0.938</small></span>
+          </button>
+          <button class="result-card result-card--wide" data-image="assets/results/genome-track.png" data-title="Chromosome 1 validation probability track">
+            <img src="assets/results/genome-track.png" alt="Validation probabilities across chromosome 1 positions" />
+            <span><b>Genome-wide signal</b><small>283 held-out genomic windows</small></span>
+          </button>
+          <button class="result-card" data-image="assets/results/calibration.png" data-title="Probability calibration">
+            <img src="assets/results/calibration.png" alt="Probability calibration chart" />
+            <span><b>Calibration</b><small>Confidence vs. observed frequency</small></span>
+          </button>
+          <button class="result-card" data-image="assets/results/confusion.png" data-title="Best-F1 confusion matrix">
+            <img src="assets/results/confusion.png" alt="Confusion matrix at the best F1 threshold" />
+            <span><b>Decision quality</b><small>Best-F1 operating threshold</small></span>
+          </button>
+          <button class="result-card" data-image="assets/results/finetune-set1-roc.png" data-title="Fine-tuning Set 1 ROC">
+            <img src="assets/results/finetune-set1-roc.png" alt="ROC curve for fine-tuning experiment Set 1" />
+            <span><b>Fine-tuning · Set 1</b><small>Curated gene-set experiment</small></span>
+          </button>
+          <button class="result-card" data-image="assets/results/finetune-set2-roc.png" data-title="Fine-tuning Set 2 ROC">
+            <img src="assets/results/finetune-set2-roc.png" alt="ROC curve for fine-tuning experiment Set 2" />
+            <span><b>Fine-tuning · Set 2</b><small>Independent comparison run</small></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="section scope" id="scope">
+        <div class="scope-copy">
+          <p class="section-number">03 / Contribution boundary</p>
+          <h2>Clear about what I built.</h2>
+          <p>
+            This work originated in the UNSW COMP3900 team capstone
+            <em>Deep Mining the Genome’s Dark Matter</em>. This portfolio deliberately presents
+            only my independent GPN contribution. Team-owned frontend, backend, GPN-MSA,
+            preprocessing, and UMAP work are excluded.
+          </p>
+          <p class="scope-note">
+            Authorship was reviewed against the private repository’s commit history and final-line attribution.
+            The original team repository and its history remain private.
+          </p>
+        </div>
+        <div class="audit-card">
+          <div class="audit-card__header">
+            <span>Final-line attribution</span><span>Git audit</span>
+          </div>
+          <div class="audit-row"><span>GPN training engine</span><b>100%</b></div>
+          <div class="audit-meter"><i style="width: 100%"></i></div>
+          <div class="audit-row"><span>Fine-tuning engine</span><b>99.2%</b></div>
+          <div class="audit-meter"><i style="width: 99.2%"></i></div>
+          <div class="audit-row"><span>Fine-tuning PBS jobs</span><b>100%</b></div>
+          <div class="audit-meter"><i style="width: 100%"></i></div>
+          <p>Calculated from the final main-branch files associated with my university Git identity.</p>
+        </div>
+      </section>
+
+      <section class="closing">
+        <p>Machine learning · Research engineering · Reproducible systems</p>
+        <h2>Built to make complex biological signals legible.</h2>
+        <a class="button button-primary" href="https://github.com/Flandre23333" target="_blank" rel="noreferrer">
+          Visit my GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="year"></span> Huan Zhang</span>
+      <span>Independent contribution from a team capstone</span>
+    </footer>
+
+    <dialog class="lightbox" aria-labelledby="lightbox-title">
+      <button class="lightbox__close" aria-label="Close image">×</button>
+      <p id="lightbox-title"></p>
+      <img src="" alt="" />
+    </dialog>
+  </body>
+</html>
