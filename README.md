@@ -13,6 +13,8 @@ The site intentionally includes only:
 
 It excludes the private repository history, team frontend/backend code, GPN-MSA work, UMAP work, datasets, checkpoints, internal paths, credentials, and other contributors' implementation.
 
+The expanded methodology content is adapted from the original README section attributed to Huan Zhang's university Git identity. Private filesystem paths have been removed, and the material has been reorganized for portfolio presentation.
+
 ## Preview
 
 Open `index.html` directly or serve the directory with any static file server.
